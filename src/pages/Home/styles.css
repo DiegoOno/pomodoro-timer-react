@@ -19,4 +19,14 @@
   border: none;
   border-radius: 10px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+  transition: 1s;
+}
+
+.confirm-button:focus {
+  outline: none;
+}
+
+.confirm-button:hover {
+  background-color: var(--background-color);
+  cursor: pointer;
 }

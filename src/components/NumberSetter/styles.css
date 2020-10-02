@@ -5,6 +5,12 @@
   align-items: center;
 }
 
+.wrapper span {
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 40px;
+}
+
 .data-field {
   display: flex;
   flex-direction: row;
@@ -19,14 +25,23 @@
 .button-wrapper button {
   height: 30px;
   width: 30px;
-  border: 1px solid var(--background-color);
+  display: flex;
   border-radius: 50%;
   background-color: var(--background-secundary);
   text-align: center;
+  align-items: center;
+  justify-content: center;
+  border: none;
 }
 
 .button-wrapper button:focus {
   outline: none;
+}
+
+.button-wrapper button:hover {
+  cursor: pointer;
+  background-color: var(--background-color);
+  border: 1px solid var(--background-secundary);
 }
 
 .data-field input {
