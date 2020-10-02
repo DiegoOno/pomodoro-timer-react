@@ -1,0 +1,45 @@
+:root {
+  --text-color: #FFFFFF;
+  --background-color: #333853;
+  --background-secundary: #3C4262;
+  --work-color: #219653;
+  --pause-color: #F2C94C;
+
+  font-size: 60%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100vh;
+}
+
+body {
+  background-color: var(--background-color);
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  padding: 10vh;
+}
+
+body, input, button {
+  font: 500 1.6rem Roboto;
+  color: var(--text-color);
+}
+
+.container {
+  width: 90vw;
+  max-width: 700px;
+}
+
+@media(min-width: 700px) {
+  :root {
+    font-size: 62.5%;
+  }
+}
