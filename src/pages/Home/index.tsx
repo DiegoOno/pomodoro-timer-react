@@ -13,9 +13,12 @@ const Home = () => {
         <NumberSetter title='Pausa' defaultValue={5}/>
         <NumberSetter title='Sessões' defaultValue={3}/>
       </div>
-      <Link to='/timer'>
-        <button className='confirm-button'><h1>Continuar</h1></button>
-      </Link>
+      <div className='confirm-container'>
+        <Link to='/timer'>
+          <button className='confirm-button'>Continuar</button>
+        </Link>
+      </div>
+      
     </div>
   );
 };
