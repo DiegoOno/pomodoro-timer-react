@@ -32,7 +32,7 @@ const NumberSetter: React.FC<NumberSetterProps> = ({ title, defaultValue }) => {
   return (
     <div className='wrapper'>
       <div className='data-field'>
-        <div className="button-wrapper">
+        <div className='button-wrapper'>
           <button onClick={increment}>
             <FaArrowUp size={20} color={buttonColor}/>
           </button>

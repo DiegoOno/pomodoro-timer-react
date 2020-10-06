@@ -4,6 +4,7 @@
   --background-secundary: #3C4262;
   --work-color: #219653;
   --pause-color: #F2C94C;
+  --stopped-color: #790105;
 
   font-size: 60%;
 }
@@ -36,6 +37,11 @@ body, input, button {
 .container {
   width: 90vw;
   max-width: 700px;
+  justify-content: center;
+}
+
+a {
+  text-decoration: none;
 }
 
 @media(min-width: 700px) {
