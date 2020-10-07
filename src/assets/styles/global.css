@@ -2,9 +2,9 @@
   --text-color: #FFFFFF;
   --background-color: #333853;
   --background-secundary: #3C4262;
-  --work-color: #219653;
-  --pause-color: #F2C94C;
-  --stopped-color: #790105;
+  --working-color: #219653;
+  --resting-color: #F2C94C;
+  --paused-color: #790105;
 
   font-size: 60%;
 }

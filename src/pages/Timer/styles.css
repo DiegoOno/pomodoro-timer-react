@@ -60,12 +60,20 @@ button:focus {
   align-items: center;
 }
 
-.timer-bar-playing {
-  border: 10px solid var(--work-color);
+.timer-bar-working {
+  border: 10px solid var(--working-color);
 }
 
-.timer-bar-stopped {
-  border: 10px solid var(--stopped-color);
+.timer-bar-resting {
+  border: 10px solid var(--resting-color);
+}
+
+.timer-bar-paused {
+  border: 10px solid var(--paused-color);
+}
+
+.timer-bar-finished {
+  border: 10px solid var(--background-color);
 }
 
 .timer-data {
@@ -77,9 +85,15 @@ button:focus {
 }
 
 .circles {
+  width: 120px;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+}
+
+.circles svg {
+  margin: 5px;
 }
 
 .start-button-container {
