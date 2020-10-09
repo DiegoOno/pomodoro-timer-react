@@ -4,12 +4,15 @@ import { Link } from 'react-router-dom';
 
 import './styles.css';
 import twoDigits from '../../utils/utils';
- 
-const Timer = () => {
-  const workingDefaultTime = 1;
-  const restingDefaultTime = 1;
-  const sections = 1;
 
+export interface TimerProperties {
+  workingDefaultTime: number;
+  restingDefaultTime: number;
+  numberOfSections: number;
+}
+
+const Timer: React.FC<TimerProperties> = ({ workingDefaultTime = 25, restingDefaultTime = 5, numberOfSections = 3 }) => {
+  
   const [actionButtonState, setActionButtonState] = useState('paused');
   const [buttonIcon, setButtonIcon] = useState(<FaPlay />);
   const [barStyle, setBarStyle] = useState('timer-bar timer-bar-playing');
@@ -72,8 +75,8 @@ const Timer = () => {
 
   // Check if all sections were finished;
   useEffect(() => {
-    if (currSection >= sections) {
-      setTimerStatus('Finished');
+    if (currSection >= numberOfSections) {
+      setTimerStatus(() => 'Finished');
     }
   }, [currSection]);
 
@@ -102,7 +105,7 @@ const Timer = () => {
   // creating sections circles
   const sectionsMarkers = [];
 
-  for (let i = 0; i < sections; i++) {
+  for (let i = 0; i < numberOfSections; i++) {
     sectionsMarkers.push(<FaCircle key={i} />);
   }
 
