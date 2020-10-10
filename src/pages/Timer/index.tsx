@@ -88,7 +88,7 @@ const Timer: React.FC<TimerProperties> = ({ workingDefaultTime, restingDefaultTi
       setButtonIcon(<FaRedo />);
       setActionButtonState('restart');
     }
-  }, [currSection]);
+  }, [currSection, numberOfSections]);
 
   // useEffect to control cronomter's style;
   useEffect(()  => {
