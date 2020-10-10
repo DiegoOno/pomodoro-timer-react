@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {FaArrowUp, FaArrowDown} from 'react-icons/fa';
 
 import './styles.css';
 
 interface NumberSetterProps {
   title: String,
-  defaultValue: number
+  defaultValue: number,
+  getFieldValue: Function
 };
 
-const NumberSetter: React.FC<NumberSetterProps> = ({ title, defaultValue }) => {
+const NumberSetter: React.FC<NumberSetterProps> = ({ title, defaultValue, getFieldValue}) => {
   const buttonColor = '#FFFFFF'
 
   const [inputValue, setInputValue] = useState(defaultValue);
@@ -28,6 +29,11 @@ const NumberSetter: React.FC<NumberSetterProps> = ({ title, defaultValue }) => {
       setInputValue(60);
     }
   }
+
+  useEffect(() => {
+    getFieldValue(Number(inputValue));
+  }, [inputValue])
+  
 
   return (
     <div className='wrapper'>

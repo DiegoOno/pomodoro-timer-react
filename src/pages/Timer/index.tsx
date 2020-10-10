@@ -4,30 +4,110 @@ import { Link } from 'react-router-dom';
 
 import './styles.css';
 import twoDigits from '../../utils/utils';
- 
-const Timer = () => {
+
+export interface TimerProperties {
+  workingDefaultTime: number;
+  restingDefaultTime: number;
+  numberOfSections: number;
+}
+
+const Timer: React.FC<TimerProperties> = ({ workingDefaultTime = 25, restingDefaultTime = 5, numberOfSections = 3 }) => {
+  
   const [actionButtonState, setActionButtonState] = useState('paused');
   const [buttonIcon, setButtonIcon] = useState(<FaPlay />);
   const [barStyle, setBarStyle] = useState('timer-bar timer-bar-playing');
   const [timerStatus, setTimerStatus] = useState('Ready');
-  const [minutes, setMinutes] = useState(25);
+  const [StatusBeforePause, setStatusBeforePause] = useState('');
+  const [minutes, setMinutes] = useState(workingDefaultTime);
   const [seconds, setSeconds] = useState(0);
-  const [sections, setSections] = useState(3);
   const [currSection, setCurrSection] = useState(0);
 
   const changeButtonState = () => {
     if (actionButtonState === 'play') {
+      if (timerStatus !== 'Ready') {
+        setStatusBeforePause(timerStatus);
+      } else {
+        setStatusBeforePause('Working');
+      }
       setButtonIcon(<FaPlay />);
       setActionButtonState('pause');
-      setBarStyle('timer-bar timer-bar-stopped');
       setTimerStatus('Paused');
     } else {
-      setActionButtonState('play');
       setButtonIcon(<FaPause />);
-      setBarStyle('timer-bar timer-bar-playing');
-      setTimerStatus('Playing');
+      setActionButtonState('play');
+      if (timerStatus === 'Ready') {
+        setTimerStatus('Working');
+      } else {
+        setTimerStatus(StatusBeforePause);
+      }
     }
   };
+
+  // useEffect to control cronomter time;
+  useEffect(() => {
+    if (timerStatus === 'Working' || timerStatus === 'Resting') {
+      const intervalId = setInterval(() => {
+        setSeconds(seconds => seconds > 0 ? seconds - 1 : 59);
+        setMinutes(minutes => seconds > 0 ? minutes : minutes - 1);
+      } , 1000);
+      return () => clearInterval(intervalId);
+    }
+  }, [timerStatus, seconds]);
+
+  // useEffect to control sections flow;
+  useEffect(() => {
+    if (minutes === 0 && seconds === 0) {
+      if (timerStatus === 'Working') {
+        setTimerStatus('Resting');
+        setMinutes(restingDefaultTime);
+        setSeconds(0);
+      }
+
+      if (timerStatus === 'Resting') {
+        sectionsMarkers[currSection] = <FaCircle color='gray' />
+        setCurrSection(currSection + 1);
+        setTimerStatus('Working');
+        setMinutes(workingDefaultTime);
+        setSeconds(0);
+      }
+    }
+  }, [minutes, seconds, timerStatus]);
+
+  // Check if all sections were finished;
+  useEffect(() => {
+    if (currSection >= numberOfSections) {
+      setTimerStatus(() => 'Finished');
+    }
+  }, [currSection]);
+
+  // useEffect to control cronomter's style;
+  useEffect(()  => {
+    let barColor: string = '';
+    if (timerStatus === 'Working' || timerStatus === 'Ready') {
+      barColor = 'working';
+    }
+
+    if (timerStatus === 'Resting') {
+      barColor = 'resting';
+    }
+
+    if (timerStatus === 'Paused') {
+      barColor = 'paused';
+    }
+
+    if (timerStatus === 'Finished') {
+      barColor = 'finished';
+    }
+
+    setBarStyle(`timer-bar timer-bar-${barColor}`);
+  }, [timerStatus]);
+
+  // creating sections circles
+  const sectionsMarkers = [];
+
+  for (let i = 0; i < numberOfSections; i++) {
+    sectionsMarkers.push(<FaCircle key={i} />);
+  }
 
   return (
     <div className='container'>
@@ -46,9 +126,7 @@ const Timer = () => {
         <div className='timer-data'>
           <span>{timerStatus}</span>
           <div className='circles'>
-            <FaCircle />
-            <FaCircle />
-            <FaCircle />
+            {sectionsMarkers}
           </div>
           <button onClick={() => changeButtonState()}>
             {buttonIcon}
