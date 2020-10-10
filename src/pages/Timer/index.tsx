@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaCircle, FaPlay, FaPause } from 'react-icons/fa';
+import { FaCircle, FaPlay, FaPause, FaRedo } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 import './styles.css';
@@ -21,8 +21,9 @@ const Timer: React.FC<TimerProperties> = ({ workingDefaultTime, restingDefaultTi
   const [minutes, setMinutes] = useState(workingDefaultTime);
   const [seconds, setSeconds] = useState(0);
   const [currSection, setCurrSection] = useState(0);
-  
+
   const changeButtonState = () => {
+    // Timer was paused
     if (actionButtonState === 'play') {
       if (timerStatus !== 'Ready') {
         setStatusBeforePause(timerStatus);
@@ -40,6 +41,13 @@ const Timer: React.FC<TimerProperties> = ({ workingDefaultTime, restingDefaultTi
       } else {
         setTimerStatus(StatusBeforePause);
       }
+    }
+
+    if (actionButtonState === 'restart') {
+      setTimerStatus('Ready');
+      setActionButtonState('pause');
+      setMinutes(workingDefaultTime);
+      setButtonIcon(<FaPlay />);
     }
   };
 
@@ -77,6 +85,8 @@ const Timer: React.FC<TimerProperties> = ({ workingDefaultTime, restingDefaultTi
   useEffect(() => {
     if (currSection >= numberOfSections) {
       setTimerStatus(() => 'Finished');
+      setButtonIcon(<FaRedo />);
+      setActionButtonState('restart');
     }
   }, [currSection]);
 
