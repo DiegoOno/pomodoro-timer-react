@@ -6,27 +6,34 @@ import './styles.css';
 interface NumberSetterProps {
   title: String,
   defaultValue: number,
-  getFieldValue: Function
+  getFieldValue: Function,
+  fieldMaxValue: number
 };
 
-const NumberSetter: React.FC<NumberSetterProps> = ({ title, defaultValue, getFieldValue}) => {
+const NumberSetter: React.FC<NumberSetterProps> = ({ 
+  title,
+  defaultValue, 
+  getFieldValue, 
+  fieldMaxValue
+  }) => {
+
   const buttonColor = '#FFFFFF'
 
   const [inputValue, setInputValue] = useState(defaultValue);
 
   const increment = () => {
-    if (inputValue < 60) {
+    if (inputValue < fieldMaxValue) {
       setInputValue(inputValue + 1);
     } else {
-      setInputValue(0);
+      setInputValue(1);
     }
   }
 
   const decrement = () => {
-    if (inputValue > 0) {
+    if (inputValue > 1) {
       setInputValue(inputValue - 1);
     } else {
-      setInputValue(60);
+      setInputValue(fieldMaxValue);
     }
   }
 

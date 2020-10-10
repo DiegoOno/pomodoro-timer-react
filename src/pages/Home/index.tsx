@@ -17,19 +17,22 @@ const Home = () => {
           title='Work' 
           defaultValue={25} 
           getFieldValue={(inputValue: number) =>
-             setWorkingTime(inputValue)}
+            setWorkingTime(inputValue)}
+          fieldMaxValue={60}
         />
         <NumberSetter 
           title='Rest' 
           defaultValue={5} 
           getFieldValue={(inputValue: number) => 
-            setRestingTime(inputValue)} 
+            setRestingTime(inputValue)}
+            fieldMaxValue={60} 
         />
         <NumberSetter 
           title='Sections' 
           defaultValue={3} 
           getFieldValue={(inputValue: number) => 
-            setSections(inputValue)} 
+            setSections(inputValue)}
+            fieldMaxValue={12} 
         />
       </div>
       <div className='confirm-container'>
