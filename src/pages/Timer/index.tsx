@@ -21,6 +21,7 @@ const Timer: React.FC<TimerProperties> = ({ workingDefaultTime, restingDefaultTi
   const [minutes, setMinutes] = useState(workingDefaultTime);
   const [seconds, setSeconds] = useState(0);
   const [currSection, setCurrSection] = useState(0);
+  const [sectionMarkers, setSectionMarkers] = useState<Array<JSX.Element>>([]);
 
   const changeButtonState = () => {
     // Timer was paused
@@ -48,8 +49,47 @@ const Timer: React.FC<TimerProperties> = ({ workingDefaultTime, restingDefaultTi
       setActionButtonState('pause');
       setMinutes(workingDefaultTime);
       setButtonIcon(<FaPlay />);
+      setCurrSection(0);
     }
   };
+
+  const changeCurrMakerColor = () => {
+    let color: string = '';
+    const newMarkers = [];
+
+    if (timerStatus === 'Working' || timerStatus === 'Ready') {
+      color = '#219653';
+    }
+
+    if (timerStatus === 'Resting') {
+      color = '#F2C94C';
+    }
+
+    if (timerStatus === 'Paused') {
+      color = '#790105';
+    }
+
+    for (let i = 0; i < numberOfSections; i++) {
+      if (i < currSection) {
+        newMarkers.push(<FaCircle key={i} color='gray' />);
+      }
+
+      if (i === currSection) {
+        newMarkers.push(<FaCircle key={i} color={color} />);
+      }
+
+      if (i > currSection) {
+        newMarkers.push(<FaCircle key={i} />);
+      }
+    
+    setSectionMarkers(newMarkers);
+      
+    }
+  };
+
+  useEffect(() => {
+    changeCurrMakerColor();
+  }, [timerStatus]);
 
   // useEffect to control cronomter time;
   useEffect(() => {
@@ -72,7 +112,6 @@ const Timer: React.FC<TimerProperties> = ({ workingDefaultTime, restingDefaultTi
       }
 
       if (timerStatus === 'Resting') {
-        sectionsMarkers[currSection] = <FaCircle color='gray' />
         setCurrSection(currSection + 1);
         setTimerStatus('Working');
         setMinutes(workingDefaultTime);
@@ -112,13 +151,6 @@ const Timer: React.FC<TimerProperties> = ({ workingDefaultTime, restingDefaultTi
     setBarStyle(`timer-bar timer-bar-${barColor}`);
   }, [timerStatus]);
 
-  // creating sections circles
-  const sectionsMarkers = [];
-
-  for (let i = 0; i < numberOfSections; i++) {
-    sectionsMarkers.push(<FaCircle key={i} />);
-  }
-
   return (
     <div className='container'>
       <div className='header'>
@@ -136,7 +168,7 @@ const Timer: React.FC<TimerProperties> = ({ workingDefaultTime, restingDefaultTi
         <div className='timer-data'>
           <span>{timerStatus}</span>
           <div className='circles'>
-            {sectionsMarkers}
+            {sectionMarkers}
           </div>
           <button onClick={() => changeButtonState()}>
             {buttonIcon}
