@@ -8,7 +8,15 @@ const Routes = () => {
   return (
     <BrowserRouter>
       <Route exact path='/' component={Home} />
-      <Route path='/timer' component={Timer} />
+      <Route path='/timer/:workingDefaultTime,:restingDefaultTime,:numberOfSections' 
+        render={(props) => 
+          <Timer 
+            workingDefaultTime={props.match.params.workingDefaultTime}
+            restingDefaultTime={props.match.params.restingDefaultTime}
+            numberOfSections={props.match.params.numberOfSections} 
+          />
+        }
+      />
     </BrowserRouter>
   );
 };

@@ -1,24 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import NumberSetter from '../../components/NumberSetter';
-import { TimerProperties } from '../Timer'
 import './styles.css';
 
 const Home = () => {
   const [workingDefaultTime, setWorkingTime] = useState(0);
   const [restingDefaultTime, setRestingTime] = useState(0);
   const [numberOfSections, setSections] = useState(0);
-  const [timerProps, setTimerProps] = useState<TimerProperties>();
-
-  useEffect(() => {
-    const timerProps: TimerProperties = {
-      workingDefaultTime,
-      restingDefaultTime,
-      numberOfSections
-    }
-    setTimerProps(timerProps);
-  }, [workingDefaultTime, restingDefaultTime, numberOfSections]);
 
   return (
     <div className='container'>
@@ -44,7 +33,7 @@ const Home = () => {
         />
       </div>
       <div className='confirm-container'>
-        <Link to='/timer'>
+        <Link to={`/timer/:${workingDefaultTime},${restingDefaultTime},${numberOfSections}`}>
           <button className='confirm-button'>
             Continue
           </button>
