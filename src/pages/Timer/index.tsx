@@ -11,7 +11,7 @@ export interface TimerProperties {
   numberOfSections: number;
 }
 
-const Timer: React.FC<TimerProperties> = ({ workingDefaultTime = 25, restingDefaultTime = 5, numberOfSections = 3 }) => {
+const Timer: React.FC<TimerProperties> = ({ workingDefaultTime, restingDefaultTime, numberOfSections}) => {
   
   const [actionButtonState, setActionButtonState] = useState('paused');
   const [buttonIcon, setButtonIcon] = useState(<FaPlay />);
@@ -21,7 +21,7 @@ const Timer: React.FC<TimerProperties> = ({ workingDefaultTime = 25, restingDefa
   const [minutes, setMinutes] = useState(workingDefaultTime);
   const [seconds, setSeconds] = useState(0);
   const [currSection, setCurrSection] = useState(0);
-
+  
   const changeButtonState = () => {
     if (actionButtonState === 'play') {
       if (timerStatus !== 'Ready') {
