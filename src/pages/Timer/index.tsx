@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaCircle, FaPlay, FaPause } from 'react-icons/fa';
+import { FaCircle, FaPlay, FaPause, FaRedo } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 import './styles.css';
@@ -11,7 +11,7 @@ export interface TimerProperties {
   numberOfSections: number;
 }
 
-const Timer: React.FC<TimerProperties> = ({ workingDefaultTime = 25, restingDefaultTime = 5, numberOfSections = 3 }) => {
+const Timer: React.FC<TimerProperties> = ({ workingDefaultTime, restingDefaultTime, numberOfSections}) => {
   
   const [actionButtonState, setActionButtonState] = useState('paused');
   const [buttonIcon, setButtonIcon] = useState(<FaPlay />);
@@ -23,6 +23,7 @@ const Timer: React.FC<TimerProperties> = ({ workingDefaultTime = 25, restingDefa
   const [currSection, setCurrSection] = useState(0);
 
   const changeButtonState = () => {
+    // Timer was paused
     if (actionButtonState === 'play') {
       if (timerStatus !== 'Ready') {
         setStatusBeforePause(timerStatus);
@@ -40,6 +41,13 @@ const Timer: React.FC<TimerProperties> = ({ workingDefaultTime = 25, restingDefa
       } else {
         setTimerStatus(StatusBeforePause);
       }
+    }
+
+    if (actionButtonState === 'restart') {
+      setTimerStatus('Ready');
+      setActionButtonState('pause');
+      setMinutes(workingDefaultTime);
+      setButtonIcon(<FaPlay />);
     }
   };
 
@@ -77,8 +85,10 @@ const Timer: React.FC<TimerProperties> = ({ workingDefaultTime = 25, restingDefa
   useEffect(() => {
     if (currSection >= numberOfSections) {
       setTimerStatus(() => 'Finished');
+      setButtonIcon(<FaRedo />);
+      setActionButtonState('restart');
     }
-  }, [currSection]);
+  }, [currSection, numberOfSections]);
 
   // useEffect to control cronomter's style;
   useEffect(()  => {

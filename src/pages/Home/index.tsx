@@ -33,7 +33,7 @@ const Home = () => {
         />
       </div>
       <div className='confirm-container'>
-        <Link to={`/timer/:${workingDefaultTime},${restingDefaultTime},${numberOfSections}`}>
+        <Link to={`/timer/${workingDefaultTime},${restingDefaultTime},${numberOfSections}`}>
           <button className='confirm-button'>
             Continue
           </button>
