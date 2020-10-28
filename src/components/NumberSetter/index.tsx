@@ -60,6 +60,7 @@ const NumberSetter: React.FC<NumberSetterProps> = ({
             min='00' 
             value={inputValue}
             disabled
+            size={2}
           />
         </div>
       </div>
